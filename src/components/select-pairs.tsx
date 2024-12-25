@@ -1,3 +1,5 @@
+"use client"
+
 import { Pairs } from "@/@types"
 import {
     Select,

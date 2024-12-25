@@ -5,8 +5,11 @@ import { FrontCard } from "@/components/card-flid/front-card"
 import { BackCard } from "@/components/card-flid/back-card"
 import { useBoard } from "./use-board"
 import { cn } from "@/lib/utils"
+import { useApp } from "@/providers/app-provider"
 
 export const Board = () => {
+
+    const { pairs } = useApp()
 
     const {
         couples,
@@ -16,8 +19,17 @@ export const Board = () => {
         setSelectCouple
     } = useBoard()
 
+    console.log(pairs)
+
     return (
-        <CardContent className="space-y-4 grid grid-cols-4 gap-4 place-items-center">
+        <CardContent className={cn(
+            "space-y-4 grid gap-4 place-items-center",
+            pairs === "8"
+                ? "grid-cols-4"
+                : pairs === "8"
+                    ? "grid-cols-6"
+                    : "grid-cols-8"
+        )}>
             {
                 couples.map(icon => {
 

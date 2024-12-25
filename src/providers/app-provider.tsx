@@ -1,29 +1,36 @@
 "use client"
 
-import { LayoutProps, Pairs, Players } from "@/@types"
+import { LayoutProps, Pairs, NumberOfPlayers } from "@/@types"
+import { playerObjects, PlayersProps } from "@/utils/players"
 import { getCookie } from "cookies-next"
 import { createContext, useContext, useState } from "react"
 
 interface AppContextProps {
-    players: Players | undefined
-    setPlayers: (players: Players) => void
-    pairs: Pairs | undefined
+    numberOfPlayers: string
+    setNumberOfPlayers: (numberOfPlayers: NumberOfPlayers) => void
+    pairs: string
     setPairs: (pairs: Pairs) => void
+    players: PlayersProps[]
+    setPlayers: (players: PlayersProps[]) => void
 }
 
 const AppContext = createContext({} as AppContextProps)
 
 export function AppProvider({ children }: LayoutProps) {
 
-    const playersToken = getCookie("players") as Players
-    const pairsToken = getCookie("pairs") as Pairs
+    const playersToken = getCookie("players") ?? "one"
+    const pairsToken = getCookie("pairs") ?? "8"
 
-    const [players, setPlayers] = useState<Players>(playersToken)
-    const [pairs, setPairs] = useState<Pairs>(pairsToken)
+    const [numberOfPlayers, setNumberOfPlayers] = useState(playersToken)
+    const [pairs, setPairs] = useState(pairsToken)
+    const [
+        players, setPlayers
+    ] = useState<PlayersProps[]>(playerObjects)
 
     const value: AppContextProps = {
-        players, setPlayers,
+        numberOfPlayers, setNumberOfPlayers,
         pairs, setPairs,
+        players, setPlayers,
     }
 
     return (

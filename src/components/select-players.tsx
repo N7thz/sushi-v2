@@ -1,4 +1,6 @@
-import { Players } from "@/@types"
+"use client"
+
+import { NumberOfPlayers } from "@/@types"
 import {
     Select,
     SelectContent,
@@ -9,21 +11,22 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useApp } from "@/providers/app-provider"
-import { players } from "@/utils/players"
+import { players as playersOptions } from "@/utils/players"
 import { setCookie } from "cookies-next"
+import { definesTheNumberOfAvatars } from "@/utils/define-number-avatars"
+import AvatarCircles from "./ui/avatar-circles"
 
 export const SelectPlayers = () => {
 
-    const { setPlayers } = useApp()
+    const { setNumberOfPlayers } = useApp()
 
     function setValue(value: string) {
 
-        const players = value as Players
+        const numberOfPlayers = value as NumberOfPlayers
 
-        setCookie("pairs", value)
-        setPlayers(players)
+        setCookie("players", value)
+        setNumberOfPlayers(numberOfPlayers)
     }
-
 
     return (
         <Select onValueChange={(value) => setValue(value)}>
@@ -34,11 +37,25 @@ export const SelectPlayers = () => {
                 <SelectGroup>
                     <SelectLabel>Players</SelectLabel>
                     {
-                        players.map(player => (
-                            <SelectItem value={player}>
-                                {player}
-                            </SelectItem>
-                        ))
+                        playersOptions.map(player => {
+
+                            const players = definesTheNumberOfAvatars(player)
+
+                            return (
+                                <div
+                                    key={player}
+                                    className="flex items-center justify-between"
+                                >
+                                    <SelectItem
+                                        value={player}
+                                        className="flex-row items-center justify-between w-min focus:bg-background focus:underline"
+                                    >
+                                        {player}
+                                    </SelectItem>
+                                    <AvatarCircles avatarUrls={players} />
+                                </div>
+                            )
+                        })
                     }
                 </SelectGroup>
             </SelectContent>

@@ -6,4 +6,4 @@ export type LayoutProps = {
 
 export type Pairs = "8" | "12" | "16"
 
-export type Players = "one" | "two" | "four"
+export type NumberOfPlayers = "one" | "two" | "four"

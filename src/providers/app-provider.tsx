@@ -15,11 +15,11 @@ const AppContext = createContext({} as AppContextProps)
 
 export function AppProvider({ children }: LayoutProps) {
 
-    const playersToken = getCookie("players") as Players | undefined
-    const pairsToken = getCookie("pairs") as Pairs | undefined
+    const playersToken = getCookie("players") as Players
+    const pairsToken = getCookie("pairs") as Pairs
 
-    const [players, setPlayers] = useState<Players | undefined>(playersToken)
-    const [pairs, setPairs] = useState<Pairs | undefined>(pairsToken)
+    const [players, setPlayers] = useState<Players>(playersToken)
+    const [pairs, setPairs] = useState<Pairs>(pairsToken)
 
     const value: AppContextProps = {
         players, setPlayers,

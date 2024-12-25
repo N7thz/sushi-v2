@@ -9,6 +9,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useApp } from "@/providers/app-provider"
+import { pairs } from "@/utils/pairs"
 import { setCookie } from "cookies-next"
 
 export const SelectPairs = () => {
@@ -31,9 +32,13 @@ export const SelectPairs = () => {
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>Pairs</SelectLabel>
-                    <SelectItem value="8">8</SelectItem>
-                    <SelectItem value="16">16</SelectItem>
-                    <SelectItem value="32">32</SelectItem>
+                    {
+                        pairs.map(pair => (
+                            <SelectItem value={pair}>
+                                {pair}
+                            </SelectItem>
+                        ))
+                    }
                 </SelectGroup>
             </SelectContent>
         </Select>

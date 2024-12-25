@@ -4,6 +4,6 @@ export type LayoutProps = {
     children: ReactNode
 }
 
-export type Pairs = "8" | "16" | "32"
+export type Pairs = "8" | "12" | "16"
 
-export type Players = "one" | "two" | "three" | "four"
+export type Players = "one" | "two" | "four"

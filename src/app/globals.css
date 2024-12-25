@@ -74,5 +74,5 @@ body {
 }
 
 .page {
-  @apply h-[calc(100dvh_-_68px)] flex items-center justify-center bg-image bg-no-repeat bg-cover;
+  @apply h-[calc(100dvh_-_68px)] flex items-center justify-center;
 }

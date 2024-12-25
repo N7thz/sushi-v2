@@ -12,11 +12,14 @@ export default function Home() {
           </CardTitle>
         </CardHeader>
         <CardFooter>
-          <Button className="w-full">
-            <Link href="/options">
+          <Link
+            href="/options"
+            className="w-full"
+          >
+            <Button className="w-full">
               Play
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>

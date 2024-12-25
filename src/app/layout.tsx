@@ -6,6 +6,8 @@ import { LayoutProps } from "@/@types"
 import { cn } from "@/lib/utils"
 import "./globals.css"
 import { Header } from "@/components/header"
+import { Grid } from "lucide-react"
+import { GridBackground } from "@/components/grid-background"
 
 const firaCode = Fira_Code({ subsets: ["latin"] })
 
@@ -24,8 +26,10 @@ export default function RootLayout({ children, }: Readonly<LayoutProps>) {
           enableSystem
         >
           <AppProvider>
-            <Header />
-            {children}
+            <GridBackground>
+              <Header />
+              {children}
+            </GridBackground>
           </AppProvider>
         </ThemeProvider>
       </body>

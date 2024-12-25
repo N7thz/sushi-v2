@@ -12,7 +12,6 @@ const config: Config = {
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-				"image": "url('https://i.pinimg.com/originals/38/a7/b9/38a7b902a0513ccd12f8a23cde664c3f.gif')"
 			},
 			borderRadius: {
 				lg: "var(--radius)",
@@ -63,6 +62,9 @@ const config: Config = {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require('tailwindcss-animated')
+	],
 }
 export default config

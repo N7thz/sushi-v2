@@ -5,7 +5,7 @@ import Link from "next/link"
 export default function Home() {
   return (
     <div className="page">
-      <Card className="w-1/4 flex flex-col justify-between">
+      <Card className="w-1/4 flex flex-col justify-between z-10 drop-shadow-2xl">
         <CardHeader>
           <CardTitle>
             Sushi Memory Game

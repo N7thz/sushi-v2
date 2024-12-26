@@ -1,4 +1,4 @@
-export type PlayersProps = {
+export type Player = {
     name: string,
     avatarUrl: string
     score: number
@@ -6,7 +6,7 @@ export type PlayersProps = {
 
 export const players = ["one", "two", "four"]
 
-export const playerObjects: PlayersProps[] = [
+export const playerObjects: Player[] = [
     {
         name: "player-01",
         avatarUrl: "/icon-01.jpg",

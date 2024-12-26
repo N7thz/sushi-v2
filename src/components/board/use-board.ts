@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { v4 as randomUUID } from 'uuid'
 import type { LucideIcon } from "lucide-react"
 import { useBeforeunload } from "react-beforeunload"
+import { playerObjects } from "@/utils/players"
 
 export interface Couple {
     id: string
@@ -18,43 +19,70 @@ export function useBoard() {
     const [selectedCouple2, setSelectedCouple2] = useState<Couple | null>(null)
     const [couplesFound, setCouplesFound] = useState<string[]>([])
 
-    const { pairs, players } = useApp()
+    const {
+        pairs,
+        currentPlayer,
+        numberOfPlayers,
+        setIsWin,
+        setCurrentPlayer
+    } = useApp()
 
     useBeforeunload(event => event.preventDefault())
 
     useEffect(() => prepareGame, [])
 
-    useEffect(() => {
+    useEffect(
+        () => {
+            if (!selectedCouple1 || !selectedCouple2) return
 
-        if (!selectedCouple1 || !selectedCouple2) return
+            if (selectedCouple1.name === selectedCouple2.name) {
 
-        if (selectedCouple1.name === selectedCouple2.name) {
-            console.log("Couple found")
+                setCouplesFound(
+                    oldValue => [...oldValue, selectedCouple1.name!]
+                )
 
-            setCouplesFound(oldValue => [...oldValue, selectedCouple1.name!])
+                setCurrentPlayer(oldValue => ({
+                    ...oldValue,
+                    score: oldValue.score + 1
+                }))
 
-            console.log(couplesFound.length)
-
-            if (couplesFound.length + 1 === couples.length / 2) {
-                alert("Congratulations, you won!")
+                if (couplesFound.length + 1 === couples.length / 2) {
+                    setIsWin(true)
+                    alert("Congratulations, you won!")
+                }
             }
 
-        }
+            if (numberOfPlayers !== "one") {
+                changeCurrentPLayer()
+            }
 
-        setTimeout(() => {
-            setSelectedCouple1(null)
-            setSelectedCouple2(null)
-        }, 1000)
+            setTimeout(() => {
+                setSelectedCouple1(null)
+                setSelectedCouple2(null)
+            }, 1000)
+        },
+        [selectedCouple1, selectedCouple2]
+    )
 
-    }, [selectedCouple1, selectedCouple2])
+    function changeCurrentPLayer() {
+
+        const currentPlayerIndex = playerObjects.findIndex(
+            player => player.name === currentPlayer.name
+        )
+
+        const lastIndex = playerObjects.length - 1
+
+        if (currentPlayerIndex === lastIndex)
+            setCurrentPlayer(playerObjects[currentPlayerIndex + 1])
+        else
+            setCurrentPlayer(playerObjects[0])
+    }
 
     function prepareGame() {
 
         const icons = pairsIcons.slice(0, Number(pairs))
 
         const iconsDuplicated = icons.concat(icons)
-
-        console.log(iconsDuplicated)
 
         const couples = iconsDuplicated.map(icon => {
 
@@ -70,8 +98,6 @@ export function useBoard() {
         const shuffledCouples = shuffleArray(couples)
 
         setCouples(shuffledCouples)
-
-        console.log(shuffledCouples)
     }
 
     function shuffleArray(array: Couple[]) {

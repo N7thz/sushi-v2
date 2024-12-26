@@ -9,16 +9,16 @@ import { Ellipsis } from "lucide-react"
 
 export const Score = () => {
 
-    const { numberOfPlayers } = useApp()
+    const { numberOfPlayers, currentPlayer } = useApp()
 
-    console.log(numberOfPlayers)
+    console.log(currentPlayer)
 
     function generateAvatar() {
 
         if (!numberOfPlayers) return null
 
         if (numberOfPlayers === "one") {
-            return playersAvatars.slice(0, 1)
+            return [currentPlayer]
         } else if (numberOfPlayers === "two") {
             return playersAvatars.slice(0, 2)
         }

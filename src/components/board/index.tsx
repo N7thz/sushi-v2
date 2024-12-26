@@ -26,39 +26,41 @@ export const Board = () => {
             "space-y-4 grid gap-4 place-items-center",
             pairs === "8"
                 ? "grid-cols-4"
-                : pairs === "8"
+                : pairs === "12"
                     ? "grid-cols-6"
                     : "grid-cols-8"
         )}>
-            {
-                couples.map(icon => {
+            {couples.map(({ id, name, Icon }) => {
 
-                    const { id, Icon } = icon
+                const isSelectedCouple1 = selectedCouple1?.id === id
+                const isSelectedCouple2 = selectedCouple2?.id === id
 
-                    const isSelectedCouple1 = selectedCouple1?.id === id
-                    const isSelectedCouple2 = selectedCouple2?.id === id
+                const isIconVisible =
+                    isSelectedCouple1 ||
+                    isSelectedCouple2 ||
+                    couplesFound.includes(name!)
 
-                    const isIconVisible =
-                        isSelectedCouple1 ||
-                        isSelectedCouple2 ||
-                        couplesFound.includes(icon.name!)
+                if (isIconVisible) {
+                    return (
+                        <FrontCard
+                            key={id}
+                            className={cn(
+                                couplesFound.includes(name!) && "bg-muted border-muted-foreground drop-shadow-2xl"
+                            )}
+                        >
+                            <Icon />
+                        </FrontCard>
+                    )
+                }
 
-                    if (isIconVisible) {
-                        return (
-                            <FrontCard
-                                key={id}
-                                className={cn(
-                                    couplesFound.includes(icon.name!) && "bg-muted border-muted-foreground drop-shadow-2xl"
-                                )}
-                            >
-                                <Icon />
-                            </FrontCard>
-                        )
-                    }
-
-                    return <BackCard onClick={() => setSelectCouple(icon)} />
-                })
-            }
+                return <BackCard
+                    onClick={() => setSelectCouple({
+                        id,
+                        name,
+                        Icon
+                    })}
+                />
+            })}
         </CardContent>
     )
 }

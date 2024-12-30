@@ -1,3 +1,5 @@
+"use client"
+
 import { useApp } from "@/providers/app-provider"
 import { Player } from "@/utils/players"
 

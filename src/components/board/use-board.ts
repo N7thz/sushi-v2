@@ -30,7 +30,7 @@ export function useBoard() {
 
     useBeforeunload(event => event.preventDefault())
 
-    useEffect(() => prepareGame, [])
+    useEffect(() => prepareGame(), [])
 
     useEffect(
         () => {
@@ -38,14 +38,10 @@ export function useBoard() {
 
             if (selectedCouple1.name === selectedCouple2.name) {
 
-                setCouplesFound(
-                    oldValue => [...oldValue, selectedCouple1.name!]
-                )
-
-                setCurrentPlayer(oldValue => ({
+                setCouplesFound(oldValue => [
                     ...oldValue,
-                    score: oldValue.score + 1
-                }))
+                    selectedCouple1.name!]
+                )
 
                 addPointsToPlayer()
 
@@ -75,7 +71,7 @@ export function useBoard() {
 
             let currentPlayer = oldValue[currentPlayerIndex]
 
-            currentPlayer.score = currentPlayer.score + 0.5
+            currentPlayer.score = currentPlayer.score + 1
 
             console.log(currentPlayer)
 
@@ -107,6 +103,8 @@ export function useBoard() {
     }
 
     function prepareGame() {
+
+        if (!pairs) console.log("n tem pares")
 
         const icons = pairsIcons.slice(0, Number(pairs))
 
@@ -146,7 +144,7 @@ export function useBoard() {
         }
 
         return 0
-    }   
+    }
 
     function getCurrentPlayer(players: Player[]) {
 

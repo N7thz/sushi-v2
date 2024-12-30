@@ -3,7 +3,6 @@
 import { useApp } from "@/providers/app-provider"
 import { playerObjects as playersAvatars } from "@/utils/players"
 import { Avatar } from "@/components/avatar"
-import { Ellipsis } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export const Score = () => {

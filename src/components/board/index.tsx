@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 export const Board = () => {
 
     const { pairs, numberOfPlayers } = useApp()
-    
+
     const { push } = useRouter()
 
     const {
@@ -26,8 +26,10 @@ export const Board = () => {
 
         push("/options")
 
-        return <div className="page" />
+        return <div className="page"/>
     }
+
+    console.log(couples)
 
     return (
         <CardContent className={cn(

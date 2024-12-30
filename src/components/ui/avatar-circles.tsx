@@ -3,12 +3,13 @@
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import { PlayersProps } from "@/utils/players";
+import { Player } from "@/utils/players";
+import Image from "next/image";
 
 interface AvatarCirclesProps {
   className?: string;
   numPeople?: number;
-  avatarUrls: PlayersProps[];
+  avatarUrls: Player[];
 }
 
 const AvatarCircles = ({
@@ -19,7 +20,7 @@ const AvatarCircles = ({
   return (
     <div className={cn("z-10 flex -space-x-4 rtl:space-x-reverse", className)}>
       {avatarUrls.map((player, index) => (
-        <img
+        <Image
           key={index}
           className="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800"
           src={player.avatarUrl}

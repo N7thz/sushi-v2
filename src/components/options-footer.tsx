@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export const OptionsFooter = () => {
 
-    const { pairs, players } = useApp()
+    const { pairs, numberOfPlayers } = useApp()
 
     return (
         <CardFooter className="flex flex-col gap-4">
@@ -17,7 +17,7 @@ export const OptionsFooter = () => {
             >
                 <Button
                     className="w-full"
-                    disabled={!pairs || !players}
+                    disabled={!pairs || !numberOfPlayers}
                 >
                     Play
                 </Button>

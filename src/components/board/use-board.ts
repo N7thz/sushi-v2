@@ -1,30 +1,31 @@
+"use client"
+
 import { useApp } from "@/providers/app-provider"
 import { pairsIcons } from "@/utils/pairs"
 import { useEffect, useState } from "react"
 import { v4 as randomUUID } from 'uuid'
-import type { LucideIcon } from "lucide-react"
 import { useBeforeunload } from "react-beforeunload"
-import { playerObjects } from "@/utils/players"
-
-export interface Couple {
-    id: string
-    Icon: LucideIcon
-    name: string | undefined
-}
+import { Player, playerObjects } from "@/utils/players"
+import { Couple } from "@/@types"
 
 export function useBoard() {
 
     const [couples, setCouples] = useState<Couple[]>([])
-    const [selectedCouple1, setSelectedCouple1] = useState<Couple | null>(null)
-    const [selectedCouple2, setSelectedCouple2] = useState<Couple | null>(null)
-    const [couplesFound, setCouplesFound] = useState<string[]>([])
 
     const {
         pairs,
         currentPlayer,
         numberOfPlayers,
+        players,
+        couplesFound,
+        selectedCouple1,
+        selectedCouple2,
+        setPlayers,
         setIsWin,
-        setCurrentPlayer
+        setCurrentPlayer,
+        setCouplesFound,
+        setSelectedCouple1,
+        setSelectedCouple2
     } = useApp()
 
     useBeforeunload(event => event.preventDefault())
@@ -46,14 +47,16 @@ export function useBoard() {
                     score: oldValue.score + 1
                 }))
 
+                addPointsToPlayer()
+
                 if (couplesFound.length + 1 === couples.length / 2) {
                     setIsWin(true)
-                    alert("Congratulations, you won!")
                 }
-            }
+            } else {
 
-            if (numberOfPlayers !== "one") {
-                changeCurrentPLayer()
+                if (numberOfPlayers !== "one") {
+                    setTimeout(changeCurrentPlayer, 1000)
+                }
             }
 
             setTimeout(() => {
@@ -64,18 +67,43 @@ export function useBoard() {
         [selectedCouple1, selectedCouple2]
     )
 
-    function changeCurrentPLayer() {
+    function addPointsToPlayer() {
 
-        const currentPlayerIndex = playerObjects.findIndex(
-            player => player.name === currentPlayer.name
-        )
+        const currentPlayerIndex = getCurrentPlayer(players)
 
-        const lastIndex = playerObjects.length - 1
+        setPlayers(oldValue => {
 
-        if (currentPlayerIndex === lastIndex)
-            setCurrentPlayer(playerObjects[currentPlayerIndex + 1])
-        else
-            setCurrentPlayer(playerObjects[0])
+            let currentPlayer = oldValue[currentPlayerIndex]
+
+            currentPlayer.score = currentPlayer.score + 0.5
+
+            console.log(currentPlayer)
+
+            oldValue[currentPlayerIndex] = currentPlayer
+
+            return oldValue
+        })
+    }
+
+    function changeCurrentPlayer() {
+
+        const currentPlayerIndex = getCurrentPlayer(playerObjects)
+
+        console.log(currentPlayerIndex)
+
+        const lastIndex = getLastIndex()
+
+        console.log(lastIndex)
+
+        if (currentPlayerIndex === lastIndex) {
+            setCurrentPlayer(players[0])
+
+            console.log(players[0])
+        } else {
+            setCurrentPlayer(players[currentPlayerIndex + 1])
+
+            console.log(players[currentPlayerIndex + 1])
+        }
     }
 
     function prepareGame() {
@@ -105,6 +133,28 @@ export function useBoard() {
             .map(value => ({ value, sort: Math.random() }))
             .sort((a, b) => a.sort - b.sort)
             .map(({ value }) => value)
+    }
+
+    function getLastIndex() {
+
+        if (numberOfPlayers === "two") {
+            return 1
+        }
+
+        if (numberOfPlayers === "four") {
+            return 3
+        }
+
+        return 0
+    }   
+
+    function getCurrentPlayer(players: Player[]) {
+
+        const currentPlayerIndex = players.findIndex(
+            player => player.name === currentPlayer.name
+        )
+
+        return currentPlayerIndex
     }
 
     function setSelectCouple(couple: Couple) {

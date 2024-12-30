@@ -6,10 +6,12 @@ import { BackCard } from "@/components/card-flid/back-card"
 import { useBoard } from "./use-board"
 import { cn } from "@/lib/utils"
 import { useApp } from "@/providers/app-provider"
+import { useRouter } from "next/navigation"
 
 export const Board = () => {
 
-    const { pairs } = useApp()
+    const { pairs, numberOfPlayers } = useApp()
+    const { push } = useRouter()
 
     const {
         couples,
@@ -19,7 +21,12 @@ export const Board = () => {
         setSelectCouple
     } = useBoard()
 
-    console.log(pairs)
+    if (!pairs || !numberOfPlayers) {
+
+        push("/options")
+
+        return <div className="page" />
+    }
 
     return (
         <CardContent className={cn(
@@ -30,7 +37,9 @@ export const Board = () => {
                     ? "grid-cols-6"
                     : "grid-cols-8"
         )}>
-            {couples.map(({ id, name, Icon }) => {
+            {couples.map(icon => {
+
+                const { id, name, Icon } = icon
 
                 const isSelectedCouple1 = selectedCouple1?.id === id
                 const isSelectedCouple2 = selectedCouple2?.id === id
@@ -54,11 +63,8 @@ export const Board = () => {
                 }
 
                 return <BackCard
-                    onClick={() => setSelectCouple({
-                        id,
-                        name,
-                        Icon
-                    })}
+                    key={id}
+                    onClick={() => setSelectCouple(icon)}
                 />
             })}
         </CardContent>

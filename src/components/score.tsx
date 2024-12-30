@@ -2,16 +2,13 @@
 
 import { useApp } from "@/providers/app-provider"
 import { playerObjects as playersAvatars } from "@/utils/players"
-import {
-    Avatar, AvatarFallback, AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar } from "@/components/avatar"
 import { Ellipsis } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export const Score = () => {
 
     const { numberOfPlayers, currentPlayer } = useApp()
-
-    console.log(currentPlayer)
 
     function generateAvatar() {
 
@@ -31,19 +28,17 @@ export const Score = () => {
     if (!avatars) return
 
     return (
-        <div className="w-full p-3 flex gap-5 items-center border border-border rounded-lg">
+        <div className="w-full p-4 flex gap-5 items-center border border-border rounded-lg">
             {
                 avatars.map(({ avatarUrl, score }) => (
                     <>
-                        <Avatar>
-                            <AvatarImage
-                                src={avatarUrl}
-                                alt="@shadcn"
-                            />
-                            <AvatarFallback>
-                                <Ellipsis />
-                            </AvatarFallback>
-                        </Avatar>
+                        <Avatar
+                            src={avatarUrl}
+                            className={cn(
+                                currentPlayer.avatarUrl === avatarUrl &&
+                                "border-2 border-primary scale-125 duration-200"
+                            )}
+                        />
                         <span>
                             {score}
                         </span>

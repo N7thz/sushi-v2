@@ -36,7 +36,10 @@ export const SelectPairs = () => {
                     <SelectLabel>Pairs</SelectLabel>
                     {
                         pairs.map(pair => (
-                            <SelectItem value={pair}>
+                            <SelectItem
+                                key={pair}
+                                value={pair}
+                            >
                                 {pair}
                             </SelectItem>
                         ))

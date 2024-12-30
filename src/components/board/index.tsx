@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation"
 export const Board = () => {
 
     const { pairs, numberOfPlayers } = useApp()
+    
     const { push } = useRouter()
 
     const {

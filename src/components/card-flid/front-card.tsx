@@ -8,6 +8,7 @@ export const FrontCard = ({
         <div
             className={cn(
                 "size-16 rounded-lg flex items-center justify-center border border-border",
+                "xl:size-20",
                 "animate-rotate-y animate-once animate-duration-500 animate-ease-out animate-normal",
                 className
             )}

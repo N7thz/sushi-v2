@@ -13,6 +13,7 @@ import {
 import { Bolt } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 export const ConfigSheet = () => {
 
@@ -35,7 +36,10 @@ export const ConfigSheet = () => {
                 <SheetHeader>
                     <SheetTitle>Options</SheetTitle>
                 </SheetHeader>
-                <SheetFooter className="w-full mt-6">
+                <SheetFooter className={cn(
+                    "w-full mt-6",
+                    "max-sm:gap-3"
+                )}>
                     <SheetClose asChild>
                         <Button className="w-full">
                             Close
